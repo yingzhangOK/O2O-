@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Delicous</title>
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="/static/css/plugins/dialog.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/plugins/swiper.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/goodList.css">
+
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth/320*20 + 'px';
+    </script>
+    <style>
+        .showWhenPageInit {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            height: 100%;
+            text-align: center;
+            z-index: 99999;
+            opacity:1;
+            background:#000;
+        }
+    </style>
+</head>
+<!-- 如果需要跳转第三方平台，禁止页面所有操作 -->
+<body > <!--class="stopEvent" -->
+
+    <!--节日提醒-->
+    <!--
+    <div class="showWhenPageInit" style="background: rgba(0, 0, 0,.75); ">
+        <div style="padding-top:30%;position: relative;display: inline-block; height: 100%; width: 100%; border-radius: 10px;">
+            <img src="http://i1.app.fan-gao.cn/static/img/holiday/51holiday@2x.png" style="width:85%;">
+            <a href="tel:4006113517" style="position:relative;bottom:13%;left: 0;width:100%;"><img src="http://i1.app.fan-gao.cn/static/img/holiday/51btn@2x.png" style="display:inline-block;width:60%;height:auto;"></a>
+        </div>
+    </div>
+    -->
+
+    <!--启动页,每次都显示-->
+   <!--  <div class="showWhenPageInit" id="wait_time">
+        <a id="startUp" href="" style="position: relative;display: inline-block; height: 100%; width: 100%; border-radius: 10px;top:0;">
+            <img src="" title="" style="width:100%;margin-top:0;">
+        </a>
+        <div style="position:fixed;bottom:1%;right:1%;font-size:18px;"><a href="javascript:;" id="jump" style="color:white;text-decoration: none;">跳过</a></div>
+    </div> -->
+
+    <!--供app切换地址使用-->
+    <div class="none" id="region-name">京盛苑</div>
+    <div class="main_wrap list_wrap">
+        <!--是app打开的就不展示购物车栏-->
+
+        <!-- 轮播 -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <!--预定明日-->
+                <div class="swiper-slide">
+                    <a href="javascript:;">
+                        <img src="http://i1.app.fan-gao.cn/static/img/banner/tomorrow_order_banner.png" title="明日预订">
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-pagination swiper-pagination-white"></div>
+        </div>
+
+        <!-- activity entry-->
+
+        <!--div class="activityEntry bottom_line">
+            <div class="EntryCtn">
+                <div class="left">
+                    <a class="doOnlyHasRegion" href="">
+                        <img src="http://i1.app.fan-gao.cn/static/img/activity/extValueMeal.png?v=201605201111" alt="超值">
+                    </a>
+                </div>
+                <div class="right">
+                    <a class="doOnlyHasRegion" href="">
+                        <img src="http://i2.app.fan-gao.cn/static/img/activity/todayP.png?v=201605201111" alt="特价">
+                    </a>
+                    <a href="">
+                        <img src="http://i3.app.fan-gao.cn/static/img/activity/todayHP.png?v=201605201111" alt="半价券">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div-->
+
+    <!-- 团餐-->
+    <!--div class="entry tuanEntry">
+        <a href="" style="width:100%">
+            <img src="http://i1.app.fan-gao.cn/static/img/activity/groupMeal.png?v=201605201111" alt="团餐入口">
+        </a>
+    </div-->
+    <!-- 半价券，签到入口 -->
+    <!--div class="entry signEntry bottom_line">
+        <a href="javascript:;" class="get_full_cut">
+            <img src="http://i2.app.fan-gao.cn/static/img/activity/reduceB.png?v=201605201111" alt="大额满减">
+        </a>
+        <a href="" class="sign_every_day">
+            <img src="http://i3.app.fan-gao.cn/static/img/activity/deliayDraw.png?v=201605201111" alt="每日签到">
+        </a>
+    </div-->
+
+    
+    <!-- 餐品区域 -->
+    <div id="goodList" class="order_list">
+        <div class="goodListTtle">Delicous</div>
+        <!--每日配菜
+        <div class="adv_item">
+            <img src="">
+        </div-->
+
+        <div class="mod_item">
+            <div class="mod_img_top">
+                <img id="110" src="/static/img/goods/paella.png" retina-src="" />
+                <!--div class="good-list-fixed"></div-->
+           
+            </div>
+            <div class="mod_item_info">
+                <div class="mod_item_row">
+                    <div class="mod_item_name">
+                        <span class="name">西班牙海鲜饭</span>
+                        <p class="mod_item_weight">111</p>
+                    </div>
+                </div>
+                <div class="mod_item_row_bottom">
+                    <input id="img_1" type="hidden" value="/static/img/goods/paella.png">
+                    <input id="name_1" type="hidden" value="西班牙海鲜饭">
+                    <input id="price_1" type="hidden" value="99.8">
+                    <div class="mod_item_price">79.8</div>
+                    <div class="mod_item_count mod_item_count_active">
+                        <!--span class="reduce grey"></span-->
+                        <span id="reduce_1" class="reduce" data-id="110" data-name="西班牙海鲜饭" data-price="79.8"></span>
+                        <input class="input" type="text" value="0" id="item_count_110" disabled="disabled" goodtype="1" />
+                    </div>
+                    <!-- 增加点击区域大小，方便点击 -->
+                    <div class="buy_item_btn buy_item_btn_plus" data-name="西班牙海鲜饭" data-empty="false">
+                        <i class="icon-fly-dot" style=""></i>
+                    </div>
+                    <div class="buy_item_btn buy_item_btn_reduce"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mod_item">
+            <div class="mod_img_top">
+                <img id="110" src="/static/img/goods/paella.png" retina-src="" />
+                <!--div class="good-list-fixed"></div-->
+           
+            </div>
+            <div class="mod_item_info">
+                <div class="mod_item_row">
+                    <div class="mod_item_name">
+                        <span class="name">西班牙海鲜饭</span>
+                        <p class="mod_item_weight">111</p>
+                    </div>
+                </div>
+                <div class="mod_item_row_bottom">
+                    <input id="img_1" type="hidden" value="/static/img/goods/paella.png">
+                    <input id="name_1" type="hidden" value="西班牙海鲜饭">
+                    <input id="price_1" type="hidden" value="99.8">
+                    <div class="mod_item_price">79.8</div>
+                    <div class="mod_item_count mod_item_count_active">
+                        <!--span class="reduce grey"></span-->
+                        <span id="reduce_1" class="reduce" data-id="110" data-name="西班牙海鲜饭" data-price="79.8"></span>
+                        <input class="input" type="text" value="10" id="item_count_110" disabled="disabled" goodtype="1" />
+                    </div>
+                    <!-- 增加点击区域大小，方便点击 -->
+                    <div class="buy_item_btn buy_item_btn_plus" data-name="西班牙海鲜饭" data-empty="false">
+                        <i class="icon-fly-dot" style=""></i>
+                    </div>
+                    <div class="buy_item_btn buy_item_btn_reduce"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mod_item">
+            <div class="mod_img_top">
+                <img id="110" src="/static/img/goods/paella.png" retina-src="" />
+                <!--div class="good-list-fixed"></div-->
+           
+            </div>
+            <div class="mod_item_info">
+                <div class="mod_item_row">
+                    <div class="mod_item_name">
+                        <span class="name">西班牙海鲜饭</span>
+                        <p class="mod_item_weight">111</p>
+                    </div>
+                </div>
+                <div class="mod_item_row_bottom">
+                    <input id="img_1" type="hidden" value="/static/img/goods/paella.png">
+                    <input id="name_1" type="hidden" value="西班牙海鲜饭">
+                    <input id="price_1" type="hidden" value="99.8">
+                    <div class="mod_item_price">79.8</div>
+                    <div class="mod_item_count mod_item_count_active">
+                        <!--span class="reduce grey"></span-->
+                        <span id="reduce_1" class="reduce" data-id="110" data-name="西班牙海鲜饭" data-price="79.8"></span>
+                        <input class="input" type="text" value="10" id="item_count_110" disabled="disabled" goodtype="1" />
+                    </div>
+                    <!-- 增加点击区域大小，方便点击 -->
+                    <div class="buy_item_btn buy_item_btn_plus" data-name="西班牙海鲜饭" data-empty="false">
+                        <i class="icon-fly-dot" style=""></i>
+                    </div>
+                    <div class="buy_item_btn buy_item_btn_reduce"></div>
+                </div>
+            </div>
+        </div>
+ 
+    </div>
+    <!-- 预订明日午餐弹出层
+   
+    <div class="showWhenPageInit tom_mask bookingTomorrow" style="padding-top:20%;background: rgba(0, 0, 0, 0.5);">
+        <div class="tom_info">
+            <div class="tom_xx">&times;</div>
+            <div class="tom_btn">
+                <div>预订明日午餐</div>
+            </div>
+        </div>
+    </div>
+    -->
+
+    <!--小食例汤添加-->
+    
+
+    <!--商品高清图-->
+    <div class="img_mask" id="img_mask">
+        <div>
+            <div class="goods_info_img">
+                <div class="close_img_mask">
+                    <img src="http://i1.app.fan-gao.cn/static/img/close.png" title="关闭按钮">
+                </div>
+                <img src="">
+                <div class="trigger_add">
+                    <img src="http://i2.app.fan-gao.cn/static/img/trigger_add.png" title="添加按钮">
+                </div>
+            </div>
+            <img src="http://i3.app.fan-gao.cn/static/img/goods_bottom_placeholder.jpg" title="底图">
+        </div>
+    </div>
+
+    <!--是app打开的就不加载购物车栏-->
+    <div class="goods_cart">
+        <span id="goods_cart_price">
+            <span class="goods_cart_price">
+                <i class="icon_dot" id="show_icon"></i>
+                合计：
+            </span>
+            <span id="show_all_price" class="goods_cart_price_num">&yen;0.00</span>
+        </span>
+        <span id="order" href="javascript:;" class="btn_cart">
+            确认订餐
+        </span>
+    </div>
+
+    <!--购物车弹出层-->
+    <div class="goods_cart_mask none">
+        <div id="cart_list" class="goods_cart_list">
+            <ul class="goods_cart_list_bd" id="cart_list_show"></ul>
+            <div class="goods_cart_list_hd">
+                已选套餐
+                <!--<div class="clear-icon-container">-->
+                    <!--<img class="clear-icon" src="static/img/tuan/clear_icon.png">-->
+                    <!--<div style="margin-left: 5px;">清空</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+    <!-- 地址选择弹出层 -->
+    <div class="address-bk none">
+        <div class="address-win">
+            <p>选择位置<i>×</i></p>
+            <div class="win-input">
+                <div class="icon-first"></div>
+                <input type="text" class="address-search" placeholder="请先选择送餐地址，点此可搜索" />
+            </div>
+            <div class="win-cancel fs-07">取消</div>
+  
+            <div id="map_list" style="overflow: hidden;position: relative">
+                <ul class="map-list-home">
+                    <li v="1" address="徐泾" is_shop="1" class="fs-07">
+                        京盛苑
+                        <span class="block grey">京华路599弄</span>
+                        <div class="solid"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--开通区域-->
+    <div class="not-find none">
+        <div>
+            <div class="info">开通区域<span>取消</span></div>
+            <div class="map-add-tips"></div>
+            <ul style="overflow: scroll" data-key="1"></ul>
+        </div>
+    </div>
+
+    <!-- APP使用的 -->
+    <!--<a href="" target="_blank" id="a-click" class="none">a标签模拟隐藏标签click</a>-->
+    <script src="http://s.app.fan-gao.cn/??global/js/fangao.js,libs/js/zepto.js,plugins/js/zepto.extend.js,plugins/js/dialog.js,plugins/js/fastclick.js,plugins/js/swiper.jquery.js,plugins/js/iscroll.js?v=2016052701"></script>
+    <script src="http://s.app.fan-gao.cn/mod/main/goodList.js?v=2016052401"></script>
+</body>
+</html>

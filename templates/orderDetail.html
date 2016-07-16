@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>饭单详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+	<meta http-equiv="Content-Type" content="text/html;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="Expires" content="-1">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Pragma" content="no-cache">
+    <script>
+        (function(win){
+            //对应640视觉稿
+            var docEl = win.document.documentElement;
+            var width = docEl.clientWidth;
+            if(width>900){
+                width = 640;
+            }
+            docEl.style.fontSize = 100*(width / 640)+"px";
+        })(window);
+    </script>
+    <link rel="stylesheet" href="http://s.app.fan-gao.cn/mod/main/order_detail.css?v=20160504">
+    {{include file="./header.html"}}
+</head>
+<body data-globalUrl='{{$__host__}}' data-runOnApp="{{if empty($__IS_APP__)}}true{{/if}}" data-cancelMsg="{{if $data.orderInfo.op_id gt 0}}{{$data.orderInfo.cancelMsg}}{{/if}}">
+    {{if !empty($data.orderInfo)}}
+    	<div class="viewport">
+    		<div class="order_info">
+                <div class="title">
+                    <div class="order_id">
+                        饭单号：{{$data.orderInfo.id}}
+                        {{if isset($data.orderInfo.is_tuan) and $data.orderInfo.is_tuan eq 1}}
+                            <span class="ttcc"><img src="http://i3.app.fan-gao.cn/static/img/ttcc.png" alt=""></span>
+                        {{/if}}
+                        <!--拆分状态-->
+                        {{if $data.orderInfo.status eq 1}}
+                            <!--待支付-->
+                            <a onclick="cancelOrder({{$data.orderInfo.id}})" class="btn_normal" href="javascript:;">取消饭单</a>
+                            {{if empty($data.orderInfo.pid) or $data.orderInfo.pid eq 0}}
+                            <a onclick="choicePayType({{$data.orderInfo.id}},{{$data.orderInfo.total_price_show}})" class="btn_normal" href="javascript:;">去支付</a>
+                            {{/if}}
+                        {{else if $data.orderInfo.status eq 2}}
+                            <!--已支付-->
+                            <a onclick="cancelOrder({{$data.orderInfo.id}})" class="btn_normal" href="javascript:;">取消饭单</a>
+                            <span class="btn_gray" style="background: none;">已支付</span>
+                            {{else if $data.orderInfo.status eq 3}}
+                            <!--备餐中-->
+                            <span class="btn_gray" style="background: none;">备餐中</span>
+                        {{else if $data.orderInfo.status eq 4}}
+                            <!--餐已发出-->
+                            <span class="btn_gray" style="background: none;">餐已发出</span>
+                        {{else if $data.orderInfo.status eq 5}}
+                            <!--可领取-->
+                            <span onclick=OrderStateUpdate(this,"{{$data.orderInfo.id}}") class="btn_normal">领餐</span>
+                        {{else if $data.orderInfo.status eq 6}}
+                            <!--已领取-->
+                            <span class="btn_gray" style="background: none;">已领取</span>
+                        {{else if $data.orderInfo.status eq -1}}
+                            <!--已取消-->
+                            <span class="btn_gray" style="background: none;">已取消</span>
+                        {{else if $data.orderInfo.status eq -2}}
+                            <!--已取消(已退款)-->
+                            <span class="btn_gray" style="background: none;">已取消</span>
+                        {{else if $data.orderInfo.status eq -3}}
+                            <!--支付中-->
+                            {{if empty($data.orderInfo.pid) or $data.orderInfo.pid neq 0}}
+                            <a onclick="choicePayType({{$data.orderInfo.id}},{{$data.orderInfo.total_price_show}})" class="btn_normal" href="javascript:;">去支付</a>
+                            {{/if}}
+                            <span class="btn_gray" style="background: none;">支付中</span>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="order_ps">
+                    <div>
+                        {{if $data.is_3rd_delivery eq 0}}取{{else}}送{{/if}}餐日期：<span class="red">{{$data.orderInfo.take_date}}</span>
+                    </div>
+                </div>
+                <div class="order_ps">
+                    <div>
+                        预计送达：<span class="red">{{if empty($data.orderInfo.estimated_time)}}11:30-12:30{{else}}{{if $data.orderInfo.is_tuan eq 0}}{{$data.orderInfo.estimated_time}}{{else}}{{$data.orderInfo.delivery_time}}{{/if}}{{/if}}</span>
+                    </div>
+                </div>
+                {{if $data.orderInfo.is_locker eq 'ok' and $data.orderInfo.is_tuan eq 0}}
+                    <div class="order_ps">
+                        <div>取餐号码：<span class="red">{{$data.orderInfo.take_code}}</span></div>
+                    </div>
+                {{/if}}
+                <div class="order_ps">
+                    {{if $data.is_3rd_delivery eq 0}}
+                        {{if !empty($data.orderInfo.clerk_mobile)}}
+                        <div>联系电话：<span class="red">{{$data.orderInfo.clerk_mobile}}</span><a href="tel:{{$data.orderInfo.clerk_mobile}}"class="phone red">拨打电话</a></div>
+                        {{else}}
+                        <div>联系电话：<span class="red">{{$data.orderInfo.clerk_mobile_text}}</span></div>
+                        {{/if}}
+                    {{else if $data.orderInfo.is_locker neq 'ok'}}
+                        <div>联系电话：<span class="red">{{$data.orderInfo.clerk_mobile}}</span><a href="tel:{{$data.orderInfo.dl_mobile}}"class="phone red">拨打电话</a></div>
+                    {{else}}
+                        <div>联系电话：<span class="red">{{$data.orderInfo.dl_mobile}}</span><a href="tel:{{$data.orderInfo.dl_mobile}}"class="phone red">拨打电话</a></div>
+                    {{/if}}
+                </div>
+                <div class="red_qcd">
+                    <div>{{if $data.is_3rd_delivery eq 0}}取{{else}}送{{/if}}餐地点：</div>
+                    <div class="red">{{$data.orderInfo.user_take_address}}</div>
+                </div>
+            </div>
+
+            <div class="order_list">
+                <div class="title">饭单详情</div>
+                <table>
+                {{if !empty($data.orderInfo.order_items)}}
+                    {{foreach from=$data.orderInfo.order_items item=oi}}
+                    <tr>
+                        <td>{{$oi.item_name}}</td>
+                        <td>x{{$oi.count}}</td>
+                        <td>&yen;{{$oi.item_price_show}}</td>
+                    </tr>
+                    {{/foreach}}
+                {{/if}}
+                </table>
+                <div class="fee_one"></div>
+                {{if $data.delivery_fee_show eq 1}}
+                <div class="fee da">配送费<span class="fee_sml">(实付满30元可免,优惠组合除外)</span><span class="fee_ps">&yen;{{$data.orderInfo.delivery_fee}}</span></div>
+                <div class="fee dada">本订单由[达达]提供配送</div>
+                {{/if}}
+                <div class="fee">消费金额总计<span class="fee_ps">&yen;{{($data.orderInfo.total_price/100)+$data.orderInfo.dct_total}}</span></div>
+                {{if isset($data.orderInfo.is_tuan) and $data.orderInfo.is_tuan eq 1}}
+                <div class="fee">团餐优惠(不可同时使用饭票)</div>
+                {{else}}
+                {{if $data.orderInfo.status eq -1 or $data.orderInfo.status eq -2}}<div class="fee">订餐优惠(饭单取消优惠将自动返还)</div>{{/if}}
+                {{/if}}
+                {{if !empty($data.coupon_use)}}<div class="fee">特殊套餐不享受饭票优惠！</div>{{/if}}
+                <div class="fee_list">
+                    {{if !empty($data.orderInfo.dct_list)}}
+                        {{foreach from=$data.orderInfo.dct_list item=v}}
+                        <div class="red">{{$v.name}}<span>{{if !isset($v.p) or $v.p eq 'ok'}}-&yen;{{/if}}{{$v.money}}</span></div>
+                        {{/foreach}}
+                    {{/if}}
+                </div>
+                <div class="fee_count red">饭单总金额：&yen;{{$data.orderInfo.total_price_show}}</div>
+            </div>
+
+            <div class="order_person">
+                <div class="title">订餐信息</div>
+                <div class="title">{{$data.orderInfo.username}}<span class="user_phone">{{$data.orderInfo.mobile}}</span></div>
+                <div class="title">{{$data.orderInfo.dis_name}}</div>
+            </div>
+
+            <div class="order_pay">
+                <p>支付方式：{{if isset($data.orderInfo.pay_type_text)}}{{$data.orderInfo.pay_type_text}}{{/if}}</p>
+                <div>备注：{{if isset($data.orderInfo.purchasing_code)}}{{$data.orderInfo.purchasing_code}}{{/if}}</div>
+                <p>下单时间：{{if isset($data.orderInfo.create_time_text)}}{{$data.orderInfo.create_time_text}}{{/if}}</p>
+                <p>支付时间：{{if isset($data.orderInfo.pay_time)}}{{$data.orderInfo.pay_time}}{{else}}未支付{{/if}}</p>
+                <p>领取时间：{{if isset($data.orderInfo.take_time_text)}}{{$data.orderInfo.take_time_text}}{{else}}未领取{{/if}}</p>
+            </div>
+            <div class="txt_info">如需发票，请到个人中心申请</div>
+    	</div>
+    {{else}}
+        <p style="margin-top:30%;text-align:center;color:#CCC;">订单数据有误</p>
+    {{/if}}
+<!--支付方式选择-->
+<div class="component_choice">
+    <div>
+        <div class="close_choice"></div>
+        <div class="choice_title">请选择支付方式</div>
+        <div class="choice_sub">选择支付方式<span></span></div>
+        <div class="choice_list">
+            {{foreach from=$data.pay_type key=k item=choice}}
+            {{if $choice.state neq 0}}
+            <div class="choice_item">
+                <div class="pay_icon"><img src="http://i2.app.fan-gao.cn/static/img/ygpay/{{$choice.type}}_icon.png"></div>
+                <div class="pay_text">
+                    <p>{{$choice.name}}</p>
+                    <p>{{$choice.desc}}</p>
+                </div>
+                <div class="choice_radio {{if isset($data.orderInfo.paytype) and $data.orderInfo.paytype eq $k}}choice_active{{/if}}" itemtype="{{$choice.act}}"></div>
+            </div>
+            {{/if}}
+            {{/foreach}}
+        </div>
+        <div class="pay_btn" id="pay_btn">
+            <div>立即支付</div>
+        </div>
+
+    </div>
+</div>
+<!--广告-->
+<div class="ad_fixed">
+    <a href="{{$__host__}}weixin.php?mod=activity&act=TimeoutDetail&from=fandanxiangqing">
+        <img src="{{$__host_static__}}static/img/cspfgg.png" alt="">
+    </a>
+</div>
+<script src="http://s.app.fan-gao.cn/??libs/js/zepto.js,plugins/js/zepto.extend.js,plugins/js/dialog.js"></script>
+<script src="http://s.app.fan-gao.cn/mod/main/order_detail.js?v=20160504"></script>
+</body>
+</html>
+{{include file="./WeiXinSign.html"}}
+{{include file="./footer.html"}}

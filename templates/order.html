@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>确认订餐</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/static/css/plugins/dialog.css">
+    <link rel="stylesheet" href="/static/css/order.rem.css">
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth/320*20 + 'px';
+    </script>
+
+</head>
+
+<body>
+    <!-- 地址 -->
+    <section class="address hasAddress">
+        <div class="nameMobile">
+            <div class="name">请设置名称</div>
+            <div class="mobile">13816102641</div>
+        </div>
+        <div class="addressInfo">
+            京华路599弄
+        </div>
+        <div class="noAddress">请添加送餐地址</div>
+        <div class="edit"></div>
+    </section>
+
+    <!-- 时间 -->
+    <section class="time">
+        <div class="wantedTime">
+            <div class="title">配送日期</div>
+            <div class="value">2016/08/09</div>
+        </div>
+        <div class="line"></div>
+        <div class="atTime">
+            <div class="title">期望送达时间</div>
+            <div class="value">
+                <select class="dateSelect">
+                    <option value="11:30-11:45"</option>
+                    <option value="11:45-12:00"</option>
+                    <option value="12:00-12:15"</option>
+                    <option value="12:15-12:30"</option>
+                    <option value="12:30-12:45"</option>
+                    <option value="12:45-13:00"</option>
+                </select>
+                <span class="nav"></span>
+            </div>
+        </div>
+        <div class="line"></div>
+        <!-- <div class="pickSave">
+            <div class="title">饭高饭票</div>
+            <div class="value">
+                <span></span>
+                <span class="nav"></span>
+            </div>
+        </div> -->
+    </section>
+    <!-- 详情 -->
+    <section class="detail">
+        <div class="goods">
+            
+            <div class="item">
+                <div class="title">西班牙海鲜炒饭</div>
+                <div class="price">¥79.8</div>
+                <div class="num">× 1</div>
+            </div>
+            <div class="item">
+                <div class="title">抹茶</div>
+                <div class="price">¥15</div>
+                <div class="num">× 2</div>
+            </div>
+
+        </div>
+        <div class="line"></div>
+        <div class="fee">
+            <div class="title">
+                <div class="name">配送费</div>
+                <div class="price">¥ 5</div>
+            </div>
+            <div class="info">本订单由 [达达] 提供配送</div>
+        </div>
+        <div class="line"></div>
+        <div class="saveInfo">
+            <div class="rightDrop paddingBot">
+                
+                <div class="block" data-save="5" data-type="红包">
+                    <div class="title">红包</div>
+                    <div class="price">－¥5</div>
+                </div>
+              
+            </div>
+            <div class="fanpiao">
+                <div class="title block paddingBot">
+                    <div class="name"></div>
+                    <div class="price"></div>
+                </div>
+                <div class="info block"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 支付 -->
+    <section class="pay">
+       
+        <div class="item wechat" pay_type="1">
+            <div class="logo"></div>
+            <div class="title">微信</div>
+            <div class="icon"></div>
+        </div>
+        <div class="line"></div>
+        <div class="item alipay" pay_type="2">
+            <div class="logo"></div>
+            <div class="title">支付宝</div>
+            <div class="icon"></div>
+        </div>
+        <div class="line"></div>
+        
+    </section>
+
+    <!-- 提交 -->
+    <section class="submit">
+        <div class="total">
+            总计：
+            <div class="price">¥ 100
+            </div>
+        </div>
+        <div class="btn">确认订餐</div>
+    </section>
+
+    <section class="addAddress">
+        <div class="item name">
+            <span class="title">订餐人</span>
+            <input type="text" value="何瑞洪" maxlength="5">
+        </div>
+        <div class="line">
+            <div></div>
+        </div>
+        <div class="item mobile">
+            <span class="title">手机号码</span>
+            <input type="text" disabled value="13816102641(已绑定)">
+        </div>
+        <div class="line">
+            <div></div>
+        </div>
+        <div class="item originAddress">
+            <span class="title">送餐地址</span>
+            <input type="text" value="京华路599弄" maxlength="50">
+        </div>
+        <div class="line">
+            <div></div>
+        </div>
+        <div class="item detail address">
+            <input type="text" value="x号楼xx室" placeholder="详细地址(具体到门号)" maxlength="50">
+        </div>
+        <div class="submitBtn">确定</div>
+    </section>
+
+    <section class="loadingContainer">
+        <div class="loading-mask" id="loading_mask"></div>
+        <div class="loading" id="loading">
+            <div class=""></div>
+            <i class="icon_wepay"><img width="100%" src="http://s.app.fan-gao.cn/mod/main/imgs/icon_wepay.png" /></i>
+            <h4 class="title">生成订单</h4>
+            <div id="dot_wave">
+                <div class="dot_wave dot_wave_1"></div>
+                <div class="dot_wave dot_wave_2"></div>
+                <div class="dot_wave dot_wave_3"></div>
+            </div>
+        </div>
+        <div style="display:none;" id="pay_btn" data-act="" data-id="">
+            <span>APP订单触发事件</span>
+        </div>
+    </section>
+    <script src="http://s.app.fan-gao.cn/??global/js/fangao.js,libs/js/zepto.js,plugins/js/fastclick.js,plugins/js/zepto.extend.js,plugins/js/dialog.js?v=2016052501"></script>
+    <script src="http://s.app.fan-gao.cn/mod/main/order.new.js?v=7"></script>
+</body>
+</html>

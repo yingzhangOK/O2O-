@@ -1,0 +1,677 @@
+@media only screen and (max-width: 1080px), only screen and (max-device-width:1080px) {
+    html, body {
+        font-size: 33.75px;
+    }
+}
+@media only screen and (max-width: 960px), only screen and (max-device-width:960px) {
+    html, body {
+        font-size: 30px;
+    }
+}
+@media only screen and (max-width: 800px), only screen and (max-device-width:800px) {
+    html, body {
+        font-size: 25px;
+    }
+}
+@media only screen and (max-width: 720px), only screen and (max-device-width:720px) {
+    html, body {
+        font-size: 22.5px;
+    }
+}
+@media only screen and (max-width: 640px), only screen and (max-device-width:640px) {
+    html, body {
+        font-size: 20px;
+    }
+}
+@media only screen and (max-width: 600px), only screen and (max-device-width:600px) {
+    html, body {
+        font-size: 18.75px;
+    }
+}
+@media only screen and (max-width: 540px), only screen and (max-device-width:540px) {
+    html, body {
+        font-size: 16.875px;
+    }
+}
+@media only screen and (max-width: 480px), only screen and (max-device-width:480px) {
+    html, body {
+        font-size: 15px;
+    }
+}
+@media only screen and (max-width: 414px), only screen and (max-device-width:414px) {
+    html, body {
+        font-size: 12.9375px;
+    }
+}
+@media only screen and (max-width: 400px), only screen and (max-device-width:400px) {
+    html, body {
+        font-size: 12.5px;
+    }
+}
+@media only screen and (max-width: 375px), only screen and (max-device-width:375px) {
+    html, body {
+        font-size: 11.71875px;
+    }
+}
+@media only screen and (max-width: 360px), only screen and (max-device-width:360px) {
+    html, body {
+        font-size: 11.25px;
+    }
+}
+@media only screen and (max-width: 320px), only screen and (max-device-width:320px) {
+    html, body {
+        font-size: 10px;
+    }
+}
+@media only screen and (max-width: 240px), only screen and (max-device-width:240px) {
+    html, body {
+        font-size: 7.5px;
+    }
+}
+html, body {
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    font: 20px/1.2 Helvetica, STHeiti STXihei, Microsoft JhengHei, Microsoft YaHei, Arial;
+    min-width: 16rem;
+    /*
+    max-width: 32rem;
+    */
+    height: auto;
+    min-height: 100%;
+    background: #F4F4F4;
+}
+.block {
+    display: block;
+}
+.none {
+    display: none;
+}
+body>section {
+    margin-bottom: 0.5rem;
+    background: #FFFFFF;
+    border-bottom: 1px solid #D7D7D7;
+}
+section.address {
+    padding: 0.7rem 0.75rem;
+    position: relative;
+    background: #fff url(/static/img/line.png) no-repeat;
+    background-position: bottom;
+    background-size: 100%;
+    border-bottom: none;
+}
+section.address .noAddress {
+    display: inline-block;
+    line-height: 1.65rem;
+}
+section.address.hasAddress .noAddress {
+    display: none;
+}
+section.address .nameMobile, section.address .addressInfo {
+    display: none;
+}
+section.address.hasAddress .nameMobile, section.address.hasAddress .addressInfo {
+    display: block;
+}
+section.address .nameMobile {
+    font-size: 0.7rem;
+    color: #2e2e2e;
+}
+section.address .nameMobile .name, section.address .nameMobile .mobile {
+    display: inline-block;
+    padding-right: 0.75rem;
+}
+section.address .addressInfo {
+    font-size: 0.65rem;
+    color: #666666;
+    padding-top: 0.3rem;
+}
+section.address .edit {
+    position: absolute;
+    top: 1.05rem;
+    right: 0.75rem;
+    width: 0.75rem;
+    height: 1.05rem;
+    background: url(/static/img/edit.png) no-repeat;
+    background-size: 100%;
+}
+section .line {
+    height: 1px;
+    background: #e7e7e7;
+}
+section.time {
+    padding: 0 0 0 0.75rem;
+    font-size: 0;
+}
+section.time .atTime, section.time .wantedTime, section.time .pickSave {
+    height: 2rem;
+    line-height: 2rem;
+}
+section.time .atTime .singleTime {
+    margin-right: 0.75rem;
+}
+section.time .atTime .value, section.time .wantedTime .value, section.time .pickSave .value {
+    height: 2rem;
+    line-height: 2rem;
+    width: 60%;
+}
+section.time .pickSave .value {
+    color: #F55356;
+}
+section.time .pickSave .disabled {
+    margin-right: 0.75rem;
+}
+section.time .pickSave .value.disabled .nav {
+    display: none;
+}
+section.time .title {
+    font-size: 0.7rem;
+    display: inline-block;
+}
+section.time .value {
+    font-size: 0.65rem;
+    display: inline-block;
+    float: right;
+    text-align: right;
+    box-sizing: border-box;
+    color: #686868;
+}
+section.time .wantedTime .value {
+    margin-right: 0.75rem;
+}
+section.time .dateSelect {
+    position: relative;
+    right: -1.5rem;
+    border: none;
+    background: rgba(0, 0, 0, 0);
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    font-size: 0.65rem;
+    height: 0.65rem;
+    line-height: 0.65rem;
+    padding-right: 1.5rem;
+    color: #686868;
+}
+section.time .dateSelect option {
+    color: #686868;
+}
+section.time .value .nav {
+    background: url(/static/img/arraw.png) no-repeat;
+    background-size: auto 100%;
+    padding: 0 1.1rem 0 0;
+    margin-left: 0.25rem;
+}
+section.detail {
+    padding: 0.65rem 0 0.65rem 0.75rem;
+    font-size: 0.65rem;
+}
+section.detail .goods .item {
+    padding-bottom: 0.45rem;
+}
+section.detail .goods .item div {
+    display: inline-block;
+}
+section.detail .goods .item div.num, section.detail .goods .item div.price {
+    float: right;
+    margin-right: 0.8rem;
+    color: #686868;
+    width: 3rem;
+    text-align: right;
+}
+section.detail .goods .item div.num {
+    width: 1.25rem;
+    padding-right: 0;
+}
+section.detail .goods .item div.price {
+    width: 3rem;
+}
+section.detail .fee {
+    padding: 0.45rem 0;
+}
+section.detail .goods.last .item:last-child {
+    padding-bottom: 0;
+}
+section.detail .fee.last {
+    padding-bottom: 0;
+}
+section.detail .fee .title {
+    color: #F55356;
+}
+section.detail .fee .info {
+    font-size: 0.6rem;
+    color: #a9a9a9;
+}
+section.detail .fee .title div {
+    display: inline-block;
+}
+section.detail .fee .title div.price {
+    float: right;
+    margin-right: 0.8rem;
+}
+section.detail .saveInfo {
+    padding: 0.45rem 0 0;
+    line-height: 1.2em;
+    color: #F55356;
+}
+section.detail .saveInfo div div {
+    display: inline-block;
+}
+section.detail .saveInfo div.price {
+    float: right;
+    margin-right: 0.8rem;
+}
+section.detail .saveInfo .block {
+    display: block;
+}
+section.detail .saveInfo .paddingBot {
+    padding-bottom: 0.25rem;
+}
+section.detail .saveInfo div.info {
+    margin-right: 0.8rem;
+    font-size: 0.6rem;
+    color: #a9a9a9;
+}
+section.pay {
+    padding: 0 0 0 0.75rem;
+    margin-bottom: 2.95rem;
+}
+section.pay .item {
+    position: relative;
+    padding: 0.4rem 0;
+}
+section.pay .logo {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.4rem;
+    position: absolute;
+    top: 0.4rem;
+    left: 0;
+}
+section.pay .title {
+    padding-left: 1.9rem;
+    box-sizing: border-box;
+    font-size: 0.7rem;
+    line-height: 1.5rem;
+}
+section.pay .item .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0.7rem 0.75rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    background-size: 100%;
+}
+.pay .line:last-child {
+    display: none;
+}
+.pay .icon {
+    background: url(/static/img/unchecked.png) no-repeat;
+}
+.pay .cur .icon {
+    background: url(/static/img/check.png) no-repeat;
+}
+.wechat .logo {
+    background: url(/static/img/wechat.png) no-repeat;
+    background-size: 100%;
+}
+.alipay .logo {
+    background: url(/static/img/alipay.png) no-repeat;
+    background-size: 100%;
+}
+.ygpay .logo {
+    background: url(/static/img/fangao.png) no-repeat;
+    background-size: 100%;
+}
+.unionpay .logo {
+    background: url(/static/img/yinlian.png) no-repeat;
+    background-size: 100%;
+}
+section.submit {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.8rem;
+    height: 2.5rem;
+    line-height: 1.7rem;
+    margin: 0;
+    box-sizing: border-box;
+    border-bottom: none;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #D7D7D7;
+}
+section.submit div {
+    display: inline-block;
+}
+section.submit div.price {
+    color: #F15255;
+}
+section.submit div.btn {
+    float: right;
+    padding: 0.45rem 0.95rem;
+    background: #FDB73D;
+    color: #fff;
+    border-radius: 3px;
+    line-height: 0.8rem;
+}
+.addAddress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #F4F4F4;
+    display: none;
+}
+.addAddress .line {
+    background: #fff;
+    padding-left: 0.75rem;
+}
+.addAddress .line div {
+    height: 0.05rem;
+    background: #D7D7D7;
+}
+.addAddress .item {
+    height: 2.2rem;
+    line-height: 2.2rem;
+    font-size: 0.65rem;
+    position: relative;
+    background: #ffffff;
+}
+.addAddress .item .title {
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+}
+.addAddress .item input, .addAddress .item input:disabled, .addAddress .item input[disabled] {
+    border: none;
+    font-size: 0.65rem;
+    padding: 0 0 0 4rem;
+    width: 100%;
+    height: 2.1rem;
+    line-height: 2.1rem;
+    box-sizing: border-box;
+    -webkit-text-fill-color: rgba(48, 48, 48, 1);
+    -webkit-opacity: 1;
+    background: transparent;
+}
+.addAddress .detail input {
+    border: none;
+    font-size: 0.65rem;
+    padding-left: 0;
+    text-indent: 4rem;
+}
+.addAddress .submitBtn {
+    margin: 1.75rem 1rem;
+    background: #FDB73D;
+    border-radius: 3px;
+    color: #fff;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+/* 优惠卷列表 */
+
+.dct-header {
+    height: 2rem;
+    line-height: 2rem;
+    width: 100%;
+    border-bottom: 1px solid #D5D5D5;
+}
+.dct-icon {
+    float: right;
+    background-image: url(/static/img/discount-icon.png);
+    background-size: 100% 100%;
+    width: 1.3rem;
+    height: 1.25rem;
+    margin: 0.4rem 0.9rem 0.4rem 0.4rem;
+}
+.dct-header p {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+.no-discount {
+    padding: 15% !important;
+    background: #FFF;
+}
+.dct-list {
+    background: #EBEBEB;
+    display: inline-block;
+    width: 95%;
+    margin-bottom: 2.75rem;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.dct-list li {
+    background-image: url(/static/img/discount-back.png);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 3.5rem;
+    border-radius: 3px;
+    padding-left: 3px;
+    margin-top: 0.5rem;
+    list-style: none;
+}
+.dct-left, .dct-right, .dct-left *, .dct-header p {
+    float: left;
+}
+.dct-left {
+    width: 30%;
+    height: 100%;
+    color: #F0802A;
+    font-size: 0.6rem;
+}
+.dct-left > div {
+    width: 100%;
+}
+.dct-left div:first-child {
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    font-size: .6rem;
+    text-align: left;
+}
+.dct-left div:last-child {
+    margin-top: 0.25rem;
+}
+.dct-left span {
+    display: block;
+    margin-top: 0.4rem;
+    margin-right: 0.1rem;
+    margin-left: 0.5rem;
+    font-size: .7rem;
+}
+.dct-left .strong {
+    font-size: 1rem;
+    font-weight: bold;
+}
+.dct-right {
+    padding-top: 0.25rem;
+    text-align: left;
+    height: 100%;
+    width: 65%;
+    font-size: 0.7rem;
+}
+.dct-right p {
+    margin: 0.15rem 0px 0.15rem 0px;
+    font-size: 0.7rem !important;
+    font-weight: 100;
+    color: #6A6A6A;
+}
+.dct-help-list {
+    padding: 0.05rem 0px 0.5rem 0.75rem;
+    font-size: 0.7rem;
+}
+.dct-help-list li {
+    margin-top: 0.5rem;
+    padding: 0px 0.75rem 0.5rem 0px;
+}
+.dct-help-list li:last-child {
+    border-bottom: 0px;
+}
+.dct-help-list li p {
+    color: #696969;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+.dct-right span {
+    display: inherit;
+}
+.dct-right span, .dct-help-list span, .no-discount {
+    color: #ACACAC;
+    font-size: 0.7rem;
+}
+.dct-help-list li, .solid {
+    border-bottom: 1px solid #DDD;
+}
+.no-discount, .no-orderadd-error {
+    padding-top: 35%;
+    text-align: center;
+}
+
+/* 下订单代金卷选择列表 */
+
+.dct-win {
+    background: #EBEBEB;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    text-align: center;
+    display: none;
+}
+
+/*选中状态*/
+
+.dct-selected-bk {
+    background-image: url(/static/img/discount-back-select.png) !important;
+}
+.dct-selected-gray {
+    background-image: url(/static/img/discount-back-gray.png) !important;
+}
+.dct-selected-gray .dct-left, .dct-selected-gray .dct-right {
+    color: #d9d9d9;
+}
+.dct-right.nopadding {
+    padding: 0;
+}
+.dct-selected-gray .dct-left div:first-child {
+    color: #333;
+}
+.dct-selected-gray .dct-right p:nth-child(2) {
+    color: #333 !important;
+}
+.dct-selected-yellow {
+    background-image: url(/static/img/discount-back-yellow.png) !important;
+    line-height: 3.5rem;
+    color: #fdb873;
+}
+.dct-selected-yellow.dct-selected-bk {
+    background-image: url(/static/img/discount-back-select.png) !important;
+    line-height: 3.5rem;
+    color: #fdb873;
+}
+.dct-close {
+    font-size: 1.2rem;
+    color: #888;
+    float: right;
+    margin: 0 0.5rem 0 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    text-align: right;
+}
+section.loadingContainer {
+    margin: 0;
+    padding: 0;
+    border-bottom: none;
+}
+.loading-mask {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.35);
+}
+.loading {
+    display: none;
+    z-index: 11;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 7.3rem;
+    margin-left: -3.625rem;
+    margin-top: -4.9rem;
+    background-color: rgba(17, 17, 17, .5);
+    padding-top: 1.25rem;
+    padding-bottom: 0.85rem;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    text-align: center;
+    color: #fff
+}
+.loading .icon_wepay {
+    display: inline-block;
+    width: 2rem;
+    height: 1.75rem;
+    filter: alpha(opacity=80);
+    -moz-opacity: .8;
+    -khtml-opacity: .8;
+    opacity: .8;
+}
+.loading .title {
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    font-weight: 700;
+}
+.loading .dot_wave {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.1rem;
+    background-color: transparent;
+    width: 0.3rem;
+    height: 0.3rem;
+    -webkit-animation-name: bounce_dot_wave;
+    -webkit-animation-duration: 1.3s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-border-radius: 50%
+}
+.loading .dot_wave_1 {
+    -webkit-animation-delay: 0s
+}
+.loading .dot_wave_2 {
+    -webkit-animation-delay: .5s
+}
+.loading .dot_wave_3 {
+    -webkit-animation-delay: 1s
+}
+@-webkit-keyframes bounce_dot_wave {
+    0% {
+        background-color: #FFF
+    }
+    100% {
+        background-color: #959595
+    }
+}
+
+.blur_effect {
+    -webkit-filter: blur(3px);
+    filter: blur(3px);
+}
