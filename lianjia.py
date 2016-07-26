@@ -5,6 +5,7 @@ import re
 import sys
 import lxml
 import random
+import pandas as pd
 import requests as r
 from bs4 import BeautifulSoup as BS
 
@@ -12,8 +13,8 @@ from bs4 import BeautifulSoup as BS
 base_url = 'http://cq.lianjia.com'
 
 headers = {'User-Agent': r'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) 'r'Chrome/45.0.2454.85 Safari/537.36 115Browser/6.0.3',
-	'Referer': r'http://com.fangjia.com/ershoufang/',
-	'Host': r'cq.fangjia.com',
+	'Referer': r'http://com.lianjia.com/',
+	'Host': r'cq.lianjia.com',
 	'Connection': 'keep-alive'
 }
 
@@ -41,19 +42,23 @@ def get_html_text(url):
 
 def get_area_list(soup):
 	ul = soup.find_all('ul', class_ = 'house-lst')
-	print ul
-	exit()
+	# print 'ul: %s' % ul
+	ret = list()
+	if not ul or len(ul) <= 0:
+		print 'You do not get a shit...'
+		return ret
+
 	li_list = BS(str(ul[0]),'lxml')
 
 	xiaoqu_list = li_list.find_all('a', class_ = 'laisuzhou')
 	source_url_list = li_list.find_all('h2')
 
-	ret = list()
 	for i in range(len(xiaoqu_list)):
 		item = xiaoqu_list[i]
 		xiaoqu_soup = BS(str(item), 'lxml')
 		xiaoqu_url = xiaoqu_soup.a.attrs['href']
-		source_url = source_url_list[i].attrs['href']
+		source_soup = BS(str(source_url_list[i]), 'lxml')
+		source_url = source_soup.a.attrs['href']
 		d = dict(xiaoqu_url = xiaoqu_url, source_url = source_url)
 		ret.append(d)
 	return ret
@@ -101,14 +106,30 @@ if __name__ == '__main__':
 		url = base_url + k
 		tmp_soup = get_html_text(url)
 		xxoo = get_area_list(tmp_soup)
-		print xxoo
-		exit()
-		# total page
-		page_html = soup.find_all('div', class_ = 'page-box house-lst-page-box')
-		page_div = BS(str(page_html[0]), 'lxml')
-
+		if len(xxoo) == 0:
+			continue
+			
 		tmp_sub_area_list = get_sub_area_list(tmp_soup)
 		sub_area_list.append(tmp_sub_area_list)
 	
-	print sub_area_list
+	#print sub_area_list
+	fin_list = list()
+	for item in sub_area_list:
+		for k, v in item.items():
+			url = base_url + k
+			soup = get_html_text(url)
+			page_html = soup.find_all('div', class_ = 'page-box house-lst-page-box')
+			# page_div = BS(str(page_html[0]), 'lxml')
+			total_page = 0
+			if page_html and len(page_html) > 0:
+				try:
+					total_page = re.search(r'totalPage\":(?P<totalPage>\d+)', str(page_html[0])).groups()[0]
+				except Exception, e:
+					pass
 
+			d = dict(name = v, url = k, total_page = total_page)
+			fin_list.append(d)
+
+	if len(fin_list) > 0:
+		df = pd.DataFrame(fin_list)
+		df.to_csv('cq_lj_base_data.csv', encoding = 'utf-8')
