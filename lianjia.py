@@ -147,7 +147,7 @@ if __name__ == '__main__':
 	# valid_data = base_data[base_data.total_page > 0]
 
 	ret = list()
-	for i in range(len(valid_data)):
+	for i in range(89, len(valid_data)):
 		item = valid_data.ix[i]
 		uri = item['url']
 		
@@ -165,4 +165,4 @@ if __name__ == '__main__':
 
 	if len(ret) > 0:
 		df = pd.DataFrame(ret)
-		df.to_csv('cq_lj_base_info.csv')
+		df.to_csv('cq_lj_base_info_02.csv')
