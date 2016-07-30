@@ -141,7 +141,7 @@ def get_base_data():
 		df.to_csv('cq_lj_base_data_1.csv', encoding = 'utf-8')
 
 
-if __name__ == '__main__':
+def get_base_info():
 	valid_data = pd.read_csv('cq_lj_base_data.csv')
 	# urls = data[data.total_page > 0]['url']
 	# valid_data = base_data[base_data.total_page > 0]
@@ -166,3 +166,7 @@ if __name__ == '__main__':
 	if len(ret) > 0:
 		df = pd.DataFrame(ret)
 		df.to_csv('cq_lj_base_info_02.csv')
+
+
+if __name__ == '__main__':
+	pass
