@@ -1,3 +1,4 @@
+#/usr/bin/python
 #! -*-coding:utf-8-*-
 
 
@@ -83,12 +84,59 @@ def get_house_base_info(soup, area):
 	return ret
 
 
-def get_house_detail():
-	pass
+def get_house_detail(soup):
+	dt_list = soup.find_all('div', 'desc-text clear')
+	dtlist = BS(str(dt_list[0]), 'lxml').find_all('dl')
+
+	matched = re.search(r'>(\d+)<', str(dtlist[0]))
+	total_price = matched.groups()[0] if matched else 0
+
+	matched = re.search(r'>(\d+)', str(dtlist[1]))
+	unit_price = matched.groups()[0] if matched else 0
+
+	matched = re.search(r'>(\d+)', str(dtlist[2]))
+	down_payment = matched.groups()[0] if matched else 0
+
+	matched = re.search(r'>(\d+)', str(dtlist[3]))
+	monthly_cost = matched.groups()[0] if matched else 0
+
+	return {
+		'total_price': total_price,
+		'unit_price': unit_price,
+		'down_payment': down_payment,
+		'monthly_cost': monthly_cost
+	}
 
 
-def get_house_location():
-	pass
+
+def get_house_xq(soup):
+	xqlist = soup.find_all('div', 'xiaoquInfoItem')
+
+	matched = re.search(r'>(\d+)', str(xqlist[0]))
+	build_year = matched.groups()[0] if matched else 0
+
+	matched = re.search(r'>(\d+).(\d+)', str(xqlist[2]))
+	wy_fee = float(matched.groups()[0] + '.' + matched.groups()[1]) else 0
+
+	matched = re.search(r'>(\d+)', str(xqlist[6]))
+	total_building = matched.groups()[0] if matched else 0
+
+	matched = re.search(r'>(\d+)', str(xqlist[7]))
+	total_house = matched.groups()[0] if matched else 0
+
+	matched = re.search(r'(\d+.\d+),(\d+.\d+)', str(xqlist[8]))
+	lat = matched.groups()[0] if matched and len(matched.groups() > 0) else 0
+	lng = matched.groups()[1] if matched and len(matched.groups() > 1) else 0
+
+	return {
+		'build_year': build_year,
+		'wy_fee': wy_fee,
+		'total_building': total_building,
+		'total_house': total_house,
+		'lat': lat,
+		'lng': lng
+	}
+
 
 
 def get_fin_url(sub_area_list):
@@ -169,4 +217,22 @@ def get_base_info():
 
 
 if __name__ == '__main__':
-	pass
+	data = pd.read_csv('cq_lj_base_info_02.csv')
+	data['total_price'] = 0
+	data['unit_price'] = 0
+	data['down_payment'] = 0
+	data['monthly_cost'] = 0
+	data['style'] = 0
+	data['total_floor'] = 0
+	data['cur_floor'] = 0
+	data['lat'] = 0
+	data['lng'] = 0
+
+	for x in xrange(0, len(data)):
+		item = data.ix[x]
+		detail_soup = get_html_text(item['source_url'])
+		house_detail = get_house_detail(detail_soup)
+
+
+
+
