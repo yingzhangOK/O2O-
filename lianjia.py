@@ -4,6 +4,7 @@
 
 import re
 import sys
+import json
 import lxml
 import redis
 import random
@@ -137,8 +138,8 @@ def get_house_xq(soup):
 	total_house = matched.groups()[0] if matched else 0
 
 	matched = re.search(r'(\d+.\d+),(\d+.\d+)', str(xqlist[8]))
-	lat = matched.groups()[0] if matched and len(matched.groups() > 0) else 0
-	lng = matched.groups()[1] if matched and len(matched.groups() > 1) else 0
+	lat = matched.groups()[0] if matched and len(matched.groups()) > 0 else 0
+	lng = matched.groups()[1] if matched and len(matched.groups()) > 1 else 0
 
 	return {
 		'build_year': build_year,
@@ -234,10 +235,10 @@ def get_redis():
 
 
 if __name__ == '__main__':
-	df1 = pd.read_csv('cq_lj_base_info.csv')
-	df2 = pd.read_csv('cq_lj_base_info_02.csv')
+	# df1 = pd.read_csv('cq_lj_base_info.csv')
+	data = pd.read_csv('cq_lj_base_info_02.csv')
 
-	data = pd.concat([df1, df2])
+	# data = pd.concat([df1, df2])
 
 	data['total_price'] = 0
 	data['unit_price'] = 0
@@ -253,9 +254,8 @@ if __name__ == '__main__':
 	redis = get_redis()
 
 	for x in xrange(0, len(data)):
+		print 'Proccessing %s' % x
 		item = data.ix[x]
-		print item['source_url']
-		exit()
 		house_detail = redis.get(item['source_url'])
 		if house_detail:
 			house_detail = json.loads(house_detail)
@@ -278,11 +278,10 @@ if __name__ == '__main__':
 			xq.append(xq_detail)
 
 		if house_detail is not None:
-			data.ix[x, 'total_price'] = house_detail['house_detail']
+			data.ix[x, 'total_price'] = house_detail['total_price']
 			data.ix[x, 'unit_price'] = house_detail['unit_price']
 			data.ix[x, 'down_payment'] = house_detail['down_payment']
 			data.ix[x, 'monthly_cost'] = house_detail['monthly_cost']
-			data.ix[x, 'total_price'] = house_detail['house_detail']
 			if xq_detail is not None:
 				data.ix[x, 'lat'] = xq_detail['lat']
 				data.ix[x, 'lng'] = xq_detail['lng']
