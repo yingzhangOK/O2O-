@@ -5,6 +5,7 @@
 import re
 import sys
 import lxml
+import redis
 import random
 import pandas as pd
 import requests as r
@@ -21,11 +22,15 @@ headers = {'User-Agent': r'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.3
 
 
 proxy_ips = [
-	'218.63.98.115:8998',
-	'218.207.102.107:81',
-	'219.226.109.204:8998',
-	'223.167.244.175:8123',
-	'120.90.6.92:8080',
+	'jp01-30.ssv7.net:39629',
+	'jp06-30.ssv7.net:39629',
+	'sg02-30.ssv7.net:39629',
+	'sg03-30.ssv7.net:39629',
+	'sg05-30.ssv7.net:39629',
+	'us01-30.ssv7.net:39629',
+	'us02-30.ssv7.net:39629',
+	'us03-30.ssv7.net:39629',
+	'hk02-30.ssv7.net:39629'
 ]
 
 
@@ -86,6 +91,10 @@ def get_house_base_info(soup, area):
 
 def get_house_detail(soup):
 	dt_list = soup.find_all('div', 'desc-text clear')
+	if not dt_list and len(dt_list) == 0:
+		print 'House Detail: You do not get any shit...'
+		return None
+
 	dtlist = BS(str(dt_list[0]), 'lxml').find_all('dl')
 
 	matched = re.search(r'>(\d+)<', str(dtlist[0]))
@@ -111,12 +120,15 @@ def get_house_detail(soup):
 
 def get_house_xq(soup):
 	xqlist = soup.find_all('div', 'xiaoquInfoItem')
+	if not xqlist and len(xqlist) == 0:
+		print 'House xq: You do not get any shit...'
+		return None
 
 	matched = re.search(r'>(\d+)', str(xqlist[0]))
 	build_year = matched.groups()[0] if matched else 0
 
 	matched = re.search(r'>(\d+).(\d+)', str(xqlist[2]))
-	wy_fee = float(matched.groups()[0] + '.' + matched.groups()[1]) else 0
+	wy_fee = float(matched.groups()[0] + '.' + matched.groups()[1]) if matched else 0
 
 	matched = re.search(r'>(\d+)', str(xqlist[6]))
 	total_building = matched.groups()[0] if matched else 0
@@ -216,23 +228,66 @@ def get_base_info():
 		df.to_csv('cq_lj_base_info_02.csv')
 
 
+def get_redis():
+	pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
+	return redis.Redis(connection_pool=pool)
+
+
 if __name__ == '__main__':
-	data = pd.read_csv('cq_lj_base_info_02.csv')
+	df1 = pd.read_csv('cq_lj_base_info.csv')
+	df2 = pd.read_csv('cq_lj_base_info_02.csv')
+
+	data = pd.concat([df1, df2])
+
 	data['total_price'] = 0
 	data['unit_price'] = 0
 	data['down_payment'] = 0
 	data['monthly_cost'] = 0
-	data['style'] = 0
-	data['total_floor'] = 0
-	data['cur_floor'] = 0
+	# data['style'] = 0
+	# data['total_floor'] = 0
+	# data['cur_floor'] = 0
 	data['lat'] = 0
 	data['lng'] = 0
 
+	xq = list()
+	redis = get_redis()
+
 	for x in xrange(0, len(data)):
 		item = data.ix[x]
-		detail_soup = get_html_text(item['source_url'])
-		house_detail = get_house_detail(detail_soup)
+		print item['source_url']
+		exit()
+		house_detail = redis.get(item['source_url'])
+		if house_detail:
+			house_detail = json.loads(house_detail)
+		else:
+			detail_soup = get_html_text(item['source_url'])
+			house_detail = get_house_detail(detail_soup)
+			if not house_detail:
+				redis.set(item['source_url'], json.dumps(house_detail))
 
+		xq_detail = redis.get(item['xiaoqu_url'])
+		if xq_detail:
+			xq_detail = json.loads(xq_detail)
+		else:
+			xq_soup = get_html_text(item['xiaoqu_url'])
+			xq_detail = get_house_xq(xq_soup)
+			if not xq_detail:
+				redis.set(item['xiaoqu_url'], json.dumps(xq_detail))
+		
+		if xq_detail is not None:
+			xq.append(xq_detail)
 
+		if house_detail is not None:
+			data.ix[x, 'total_price'] = house_detail['house_detail']
+			data.ix[x, 'unit_price'] = house_detail['unit_price']
+			data.ix[x, 'down_payment'] = house_detail['down_payment']
+			data.ix[x, 'monthly_cost'] = house_detail['monthly_cost']
+			data.ix[x, 'total_price'] = house_detail['house_detail']
+			if xq_detail is not None:
+				data.ix[x, 'lat'] = xq_detail['lat']
+				data.ix[x, 'lng'] = xq_detail['lng']
 
-
+	data.to_csv('fin_data.csv', encoding = 'utf-8')
+	
+	df = pd.DataFrame(xq)
+	df.to_csv('xq.csv', encoding = 'utf-8')
