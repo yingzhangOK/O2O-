@@ -262,7 +262,7 @@ if __name__ == '__main__':
 		else:
 			detail_soup = get_html_text(item['source_url'])
 			house_detail = get_house_detail(detail_soup)
-			if not house_detail:
+			if house_detail is not None:
 				redis.set(item['source_url'], json.dumps(house_detail))
 
 		xq_detail = redis.get(item['xiaoqu_url'])
@@ -271,7 +271,7 @@ if __name__ == '__main__':
 		else:
 			xq_soup = get_html_text(item['xiaoqu_url'])
 			xq_detail = get_house_xq(xq_soup)
-			if not xq_detail:
+			if xq_detail is not None:
 				redis.set(item['xiaoqu_url'], json.dumps(xq_detail))
 		
 		if xq_detail is not None:
@@ -286,7 +286,7 @@ if __name__ == '__main__':
 				data.ix[x, 'lat'] = xq_detail['lat']
 				data.ix[x, 'lng'] = xq_detail['lng']
 
-	data.to_csv('fin_data.csv', encoding = 'utf-8')
+	data.to_csv('fin_data_01.csv', encoding = 'utf-8')
 	
 	df = pd.DataFrame(xq)
-	df.to_csv('xq.csv', encoding = 'utf-8')
+	df.to_csv('xq_01.csv', encoding = 'utf-8')
